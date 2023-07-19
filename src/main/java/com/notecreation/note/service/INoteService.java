@@ -9,14 +9,16 @@ public interface INoteService {
 
     NoteDTO editNote(Integer id, NoteDTO note);
 
-    NoteDTO deleteNote(Integer id, NoteDTO note);
+    NoteDTO deleteNote(Integer id);
 
-    NoteDTO archiveNote(Integer id, NoteDTO note);
+    NoteDTO archiveNote(Integer id);
 
 
-    NoteDTO unarchiveNote(Integer id, NoteDTO note);
+    NoteDTO unarchiveNote(Integer id);
 
     List<NoteDTO> listArchivedNote();
 
     List<NoteDTO> listUnarchivedNote();
+
+    NoteDTO readOneNote(Integer id);
 }

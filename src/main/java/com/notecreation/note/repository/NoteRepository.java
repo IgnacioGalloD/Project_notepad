@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note,Integer> {
-    List<Note> findByArchivedTrue();
 
-    List<Note> findByArchivedFalse();
+    List<Note> findByArchivedTrueAndDeletedFalse();
+
+    List<Note> findByArchivedFalseAndDeletedFalse();
 }

@@ -13,42 +13,56 @@ public class NoteController {
     private INoteService service;
 
     //      CREATE NOTE
+
     @PostMapping(value="/createnote")
     public ResponseEntity<NoteDTO> createNote(@RequestBody NoteDTO note){
         return new ResponseEntity<>(service.createNote(note), HttpStatus.CREATED);
     }
 
+    //      READ NOTE BY ID
+
+    @GetMapping(value = "/readonenote/{id}")
+    public ResponseEntity<NoteDTO> readOneNote(@PathVariable Integer id){
+        return new ResponseEntity<>(service.readOneNote(id), HttpStatus.OK);
+    }
+
     //      EDIT NOTE
+
     @PutMapping(value="/editnote/{id}")
     public ResponseEntity<?> editNote(@PathVariable Integer id, @RequestBody NoteDTO note){
-        return new ResponseEntity<>(service.editNote(id, note), HttpStatus.OK);
+        return new ResponseEntity<NoteDTO>(service.editNote(id, note), HttpStatus.OK);
     }
 
     //      DELETE NOTE
+
     @PutMapping(value = "/deletenote/{id}")
-    public  ResponseEntity<?> deleteNote(@PathVariable Integer id, @RequestBody NoteDTO note){
-        return new ResponseEntity<>(service.deleteNote(id, note), HttpStatus.OK);
+    public  ResponseEntity<?> deleteNote(@PathVariable Integer id){
+        return new ResponseEntity<>(service.deleteNote(id), HttpStatus.OK);
     }
 
     //      ARCHIVE NOTE
+
     @PutMapping(value = "/archivenote/{id}")
-    public ResponseEntity<?> archiveNote(@PathVariable Integer id, @RequestBody NoteDTO note){
-        return new ResponseEntity<>(service.archiveNote(id, note), HttpStatus.OK);
+    public ResponseEntity<?> archiveNote(@PathVariable Integer id){
+        return new ResponseEntity<>(service.archiveNote(id), HttpStatus.OK);
     }
 
     //      UNARCHIVE NOTE
+
     @PutMapping(value = "/unarchivenote/{id}")
-    public ResponseEntity<?> unarchiveNote(@PathVariable Integer id, @RequestBody NoteDTO note){
-        return new ResponseEntity<>(service.unarchiveNote(id,note), HttpStatus.OK);
+    public ResponseEntity<?> unarchiveNote(@PathVariable Integer id){
+        return new ResponseEntity<>(service.unarchiveNote(id), HttpStatus.OK);
     }
 
     //      LIST ACTIVE NOTE
+
     @GetMapping(value = "/listarchivednote")
     public ResponseEntity<?> listArchivedNote(){
         return new ResponseEntity<>(service.listArchivedNote(), HttpStatus.OK);
     }
 
     //      LIST UNACTIVE NOTE
+
     @GetMapping(value = "/listunarchivednote")
     public ResponseEntity<?> listUnarchivedNote(){
         return new ResponseEntity<>(service.listUnarchivedNote(), HttpStatus.OK);

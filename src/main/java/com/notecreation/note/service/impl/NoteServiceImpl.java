@@ -27,47 +27,40 @@ public class NoteServiceImpl implements INoteService {
 
     @Override
     public NoteDTO editNote(Integer id, NoteDTO note) {
-        Note editedNote = repo.findById(id).orElseThrow();
+        Note editedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
         editedNote.setTitle(note.getTitle());
         editedNote.setContent(note.getContent());
-        editedNote.setArchived(note.isArchived());
-        editedNote.setDeleted(note.isDeleted());
-        return NoteDTO.toDTO(editedNote);
+        Note savedNote = repo.save(editedNote);
+        return NoteDTO.toDTO(savedNote);
     }
 
     @Override
-    public NoteDTO deleteNote(Integer id, NoteDTO note) {
-        Note deletedNote = repo.findById(id).orElseThrow();
-        deletedNote.setTitle(note.getTitle());
-        deletedNote.setContent(note.getContent());
-        deletedNote.setArchived(note.isArchived());
-        deletedNote.setDeleted(true);                       // change here
-        return NoteDTO.toDTO(deletedNote);
+    public NoteDTO deleteNote(Integer id) {
+        Note deletedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+        deletedNote.setDeleted(true);
+        Note savedNote = repo.save(deletedNote);
+        return NoteDTO.toDTO(savedNote);
     }
 
     @Override
-    public NoteDTO archiveNote(Integer id, NoteDTO note) {
-        Note archivedNote = repo.findById(id).orElseThrow();
-        archivedNote.setTitle(note.getTitle());
-        archivedNote.setContent(note.getContent());
-        archivedNote.setDeleted(note.isDeleted());
-        archivedNote.setArchived(true);                     // change here
-        return NoteDTO.toDTO(archivedNote);
+    public NoteDTO archiveNote(Integer id) {
+        Note archivedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+        archivedNote.setArchived(true);
+        Note savedNote = repo.save(archivedNote);
+        return NoteDTO.toDTO(savedNote);
     }
 
     @Override
-    public NoteDTO unarchiveNote(Integer id, NoteDTO note) {
-        Note unarchivedNote = repo.findById(id).orElseThrow();
-        unarchivedNote.setTitle(note.getTitle());
-        unarchivedNote.setContent(note.getContent());
-        unarchivedNote.setDeleted(note.isDeleted());
-        unarchivedNote.setArchived(false);                  // change here
-        return NoteDTO.toDTO(unarchivedNote);
+    public NoteDTO unarchiveNote(Integer id) {
+        Note unarchivedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+        unarchivedNote.setArchived(false);
+        Note savedNote = repo.save(unarchivedNote);
+        return NoteDTO.toDTO(savedNote);
     }
 
     @Override
     public List<NoteDTO> listArchivedNote() {
-        List<Note> savedArchivedNotes = repo.findByArchivedTrue();
+        List<Note> savedArchivedNotes = repo.findByArchivedTrueAndDeletedFalse();
         List<NoteDTO> readedArchivedNotes = new ArrayList<>();
         for(Note note:savedArchivedNotes){
             readedArchivedNotes.add(NoteDTO.toDTO(note));
@@ -77,11 +70,17 @@ public class NoteServiceImpl implements INoteService {
 
     @Override
     public List<NoteDTO> listUnarchivedNote() {
-        List<Note> savedUnarchivedNotes = repo.findByArchivedFalse();
+        List<Note> savedUnarchivedNotes = repo.findByArchivedFalseAndDeletedFalse();
         List<NoteDTO> readedUnarchivedNotes = new ArrayList<>();
         for(Note note:savedUnarchivedNotes){
             readedUnarchivedNotes.add(NoteDTO.toDTO(note));
         }
         return readedUnarchivedNotes;
+    }
+
+    @Override
+    public NoteDTO readOneNote(Integer id) {
+        Note savedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID: "+id));
+        return NoteDTO.toDTO(savedNote);
     }
 }
