@@ -1,6 +1,6 @@
-package service;
+package com.notecreation.note.service;
 
-import dto.NoteDTO;
+import com.notecreation.note.dto.NoteDTO;
 
 import java.util.List;
 

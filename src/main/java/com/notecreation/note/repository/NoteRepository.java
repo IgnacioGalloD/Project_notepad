@@ -1,6 +1,6 @@
-package repository;
+package com.notecreation.note.repository;
 
-import domain.Note;
+import com.notecreation.note.domain.Note;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

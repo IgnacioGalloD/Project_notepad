@@ -1,11 +1,11 @@
-package service.impl;
+package com.notecreation.note.service.impl;
 
-import domain.Note;
-import dto.NoteDTO;
+import com.notecreation.note.domain.Note;
+import com.notecreation.note.dto.NoteDTO;
+import com.notecreation.note.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.NoteRepository;
-import service.INoteService;
+import com.notecreation.note.repository.NoteRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,11 @@
-package controller;
+package com.notecreation.note.controller;
 
-import dto.NoteDTO;
+import com.notecreation.note.dto.NoteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.INoteService;
+import com.notecreation.note.service.INoteService;
 
 @RestController
 public class NoteController {

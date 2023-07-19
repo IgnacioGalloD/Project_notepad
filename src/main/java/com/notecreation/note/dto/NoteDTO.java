@@ -1,6 +1,6 @@
-package dto;
+package com.notecreation.note.dto;
 
-import domain.Note;
+import com.notecreation.note.domain.Note;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

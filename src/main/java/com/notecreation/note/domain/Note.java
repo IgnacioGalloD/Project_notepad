@@ -1,4 +1,4 @@
-package domain;
+package com.notecreation.note.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
