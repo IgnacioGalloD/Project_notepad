@@ -1,6 +1,7 @@
 package com.notecreation.note.dto;
 
 import com.notecreation.note.domain.Note;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class NoteDTO {
     private Integer id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String content;
     private boolean archived;
     private boolean deleted;

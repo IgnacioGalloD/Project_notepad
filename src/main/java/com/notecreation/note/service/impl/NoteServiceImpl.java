@@ -2,6 +2,7 @@ package com.notecreation.note.service.impl;
 
 import com.notecreation.note.domain.Note;
 import com.notecreation.note.dto.NoteDTO;
+import com.notecreation.note.exceptions.NoteNotFoundException;
 import com.notecreation.note.service.INoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,9 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public NoteDTO editNote(Integer id, NoteDTO note) {
-        Note editedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+    public NoteDTO editNote(Integer id, NoteDTO note) throws NoteNotFoundException {
+        //Note editedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+        Note editedNote = repo.findById(id).orElseThrow(() -> new NoteNotFoundException("User not found. ID: "+id));
         editedNote.setTitle(note.getTitle());
         editedNote.setContent(note.getContent());
         Note savedNote = repo.save(editedNote);
@@ -35,24 +37,24 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public NoteDTO deleteNote(Integer id) {
-        Note deletedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+    public NoteDTO deleteNote(Integer id) throws NoteNotFoundException{
+        Note deletedNote = repo.findById(id).orElseThrow(() -> new NoteNotFoundException("User not found. ID: "+id));
         deletedNote.setDeleted(true);
         Note savedNote = repo.save(deletedNote);
         return NoteDTO.toDTO(savedNote);
     }
 
     @Override
-    public NoteDTO archiveNote(Integer id) {
-        Note archivedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+    public NoteDTO archiveNote(Integer id) throws NoteNotFoundException{
+        Note archivedNote = repo.findById(id).orElseThrow(() -> new NoteNotFoundException("User not found. ID: "+id));
         archivedNote.setArchived(true);
         Note savedNote = repo.save(archivedNote);
         return NoteDTO.toDTO(savedNote);
     }
 
     @Override
-    public NoteDTO unarchiveNote(Integer id) {
-        Note unarchivedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID"+id));
+    public NoteDTO unarchiveNote(Integer id) throws NoteNotFoundException{
+        Note unarchivedNote = repo.findById(id).orElseThrow(() -> new NoteNotFoundException("User not found. ID: "+id));
         unarchivedNote.setArchived(false);
         Note savedNote = repo.save(unarchivedNote);
         return NoteDTO.toDTO(savedNote);
@@ -79,8 +81,8 @@ public class NoteServiceImpl implements INoteService {
     }
 
     @Override
-    public NoteDTO readOneNote(Integer id) {
-        Note savedNote = repo.findById(id).orElseThrow(() -> new IllegalStateException("Wrong user ID: "+id));
+    public NoteDTO readOneNote(Integer id) throws NoteNotFoundException{
+        Note savedNote = repo.findById(id).orElseThrow(() -> new NoteNotFoundException("User not found. ID: "+id));
         return NoteDTO.toDTO(savedNote);
     }
 }
